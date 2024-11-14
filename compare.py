@@ -4,6 +4,7 @@ pass_visit_list = ["Personal care", "Companionship", "Sleeping night", "Waking n
 visit_list = ["Personal care", "Companionship", "Sleeping night", "Waking night","Welfare, Shopping", "Cleaning"]
 ##on pass not cm that matter = Personal care, Companionship, Sleeping night, Waking night, Welfare, Shopping, Cleaning
 
+
 HOURS_THRESHOLD = 2.5
 key_delimeter = "^"
 
