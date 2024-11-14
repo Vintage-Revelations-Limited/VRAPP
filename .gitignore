@@ -1,1 +1,8 @@
 *.csv
+!csv/cm
+!csv/employee_csv
+!csv/issues
+!csv/monthly_roundups
+!csv/pass
+!csv/testdata
+!csv/tmp
