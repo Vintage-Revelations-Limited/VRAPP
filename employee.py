@@ -45,8 +45,6 @@ class Employee:
                 else:
                     pln_dur = duration
                 self.hours += com.convert_to_hours_value(pln_dur)
-            elif duration > pln_dur:
-                self.hours += com.convert_to_hours_value(pln_dur)
             else:
                 self.hours += com.convert_to_hours_value(duration)
 

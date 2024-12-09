@@ -1,7 +1,7 @@
 import math
 
-pass_visit_list = ["Personal care", "Companionship", "Sleeping night", "Waking night","Welfare, Shopping", "Cleaning", "Training", "Supervision", "Pick Up/Off"]
-visit_list = ["Personal care", "Companionship", "Sleeping night", "Waking night","Welfare, Shopping", "Cleaning"]
+pass_visit_list = ["Personal care", "Companionship", "Sleeping night", "Waking night","Welfare, Shopping", "Cleaning", "Training", "Supervision", "Pick Up/Off", "Staff meeting"]
+visit_list = ["Personal care", "Companionship", "Sleeping night", "Waking night","Welfare, Shopping", "Cleaning", "Staff meeting"]
 ##on pass not cm that matter = Personal care, Companionship, Sleeping night, Waking night, Welfare, Shopping, Cleaning
 
 HOURS_THRESHOLD = 2.5
@@ -86,7 +86,7 @@ def on_pass_not_on_cm_keys(pass_df, cm_df):
 
     for i in range(len(pass_df.index)):
         date = pass_df["Planned Date"].iloc[i]
-        p_time = pass_df["Planned Time"].iloc[i]
+        p_time = pass_df["Planned Start Time"].iloc[i]
 
         if is_visit_type(pass_df["Visit/ Event Type"].iloc[i]):
             pass_keys.add(create_duration_key(convert_pass_date_to_standard(date),
