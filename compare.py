@@ -38,7 +38,7 @@ def is_visit_type(visit_type):
 def remove_employees(list_to_remove, employee_list):
     for i in list_to_remove:
         for e in employee_list:
-            if i == e.employee_name:
+            if i == e.name:
                 employee_list.remove(e)
 
 def is_twilight(begin_time, end_time, check_time):
@@ -117,16 +117,6 @@ def on_pass_not_on_cm_keys(pass_df, cm_df):
                   str(duration)))
         cm_keys.add(create_duration_key(convert_cm_date_to_standard(cm_df["Date"].iloc[j]),
                   actual_time,
-                  plnd_cw_name,
-                  str(cm_df["Client Forename"].iloc[j].lower()) + " " + str(cm_df["Client Surname"].iloc[j]).lower(),
-                  str(duration)))
-        cm_keys.add(create_duration_key(convert_cm_date_to_standard(cm_df["Date"].iloc[j]),
-                  plnd_time,
-                  actual_cw_name,
-                  str(cm_df["Client Forename"].iloc[j].lower()) + " " + str(cm_df["Client Surname"].iloc[j]).lower(), 
-                  str(duration)))
-        cm_keys.add(create_duration_key(convert_cm_date_to_standard(cm_df["Date"].iloc[j]),
-                  plnd_time,
                   plnd_cw_name,
                   str(cm_df["Client Forename"].iloc[j].lower()) + " " + str(cm_df["Client Surname"].iloc[j]).lower(),
                   str(duration)))

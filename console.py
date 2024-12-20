@@ -84,6 +84,7 @@ while(running):
        print("[1] Generate report for CM discrepencies")
        print("[2] Sub 50 percent duration report")
        print("[3] Partial/Planned only on CM report")
+       print("[4] Client percentages")
 
        key = input()
        key = sanitize_key(key)
@@ -94,7 +95,9 @@ while(running):
        elif key == "2":
            state = "sub"
        elif key == "3":
-           state = "part"     
+           state = "part"
+       elif key == "4":
+           state = "client"       
        else:
            print("incorrect selection")
     if state == "disp":
@@ -112,4 +115,8 @@ while(running):
     if state == "part":
         print("Generating report, please wait...")
         g.generate_partial_report()
+        state = "i"
+    if state == "client":
+        print("Generating report, please wait...")
+        g.generate_client_report()
         state = "i"

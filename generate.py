@@ -10,15 +10,15 @@ key_delimeter = "^"
 def generate_monthly_csv_from_employees():
     monthly_csv = pd.DataFrame(columns=["Name", "Hours", "Mileage", "Travel Hours"])
     for e in ini.employee_list:
-        monthly_csv.loc[len(monthly_csv.index)] = [e.employee_name, e.hours, e.mileage, e.travel_hours]
+        monthly_csv.loc[len(monthly_csv.index)] = [e.name, e.hours, e.mileage, e.travel_hours]
     print("csv generated in monthly_roundups folder")
     monthly_csv.to_csv("csv/monthly_roundups/roundup_" + dt.datetime.now().strftime("%d_%m_%y_%H%M%S") + ".csv")
 
 def generate_hours_csv_from_employee(e):
     csv = pd.DataFrame(columns=["Name", "Hours", "Mileage", "Travel Hours"])
-    csv.loc[len(csv.index)] = [e.employee_name, e.hours, e.mileage, e.travel_hours]
+    csv.loc[len(csv.index)] = [e.name, e.hours, e.mileage, e.travel_hours]
     print("csv generated in employee_csv folder")
-    csv.to_csv("csv/employee_csv/" + e.employee_name + "_HOURS" + dt.datetime.now().strftime("%d_%m_%y_%H%M%S") + ".csv")
+    csv.to_csv("csv/employee_csv/" + e.name + "_HOURS" + dt.datetime.now().strftime("%d_%m_%y_%H%M%S") + ".csv")
 
 def generate_visits_csv_from_employee(e):
     events = extract_keys_from_datetime(e.personal_cm_df, e.personal_pass_df)
@@ -37,7 +37,7 @@ def generate_visits_csv_from_employee(e):
             count += 1
     csv.loc[count] = pd.Series({"Date": "", "Time" : "", "Name": "", "Client name" : "", "Duration (Hours)" : "Total: " + str(round(float(total_duration), 2))})
     print("csv generated in employee_csv folder")
-    csv.to_csv("csv/employee_csv/" + e.employee_name + "_VISITS" + dt.datetime.now().strftime("%d_%m_%y_%H%M%S") + ".csv")
+    csv.to_csv("csv/employee_csv/" + e.name + "_VISITS" + dt.datetime.now().strftime("%d_%m_%y_%H%M%S") + ".csv")
 
 
 def extract_keys_from_datetime(cm_df, pass_df):
@@ -94,7 +94,7 @@ def generate_partial_report():
     cm_df = csv.get_monthly_cm_csv()
     partials = pd.DataFrame(columns=["Date", "Carer first name", "Carer last name", "Client first name", "Client last name"])
     for x in range(len(cm_df.index)):
-        if str(cm_df["Actual End Time"].iloc[x]).lower() == "nan":
+        if str(cm_df["Actual End Time"].iloc[x]).lower() == "nan" and str(cm_df["Actual Start Time"].iloc[x]).lower() != "nan":
             partials.loc[len(partials.index)] = [cm_df["Date"].iloc[x],
                                                 cm_df["Actual Care Worker Forename"].iloc[x],
                                                 cm_df["Actual Care Worker Surname"].iloc[x],
@@ -109,4 +109,12 @@ def generate_sub_50_report():
     df = pd.DataFrame(sub_50)
     df = df.drop_duplicates()
     df.to_csv("csv/employee_csv/sub_50_report_" + dt.datetime.now().strftime("%d_%m_%y_%H%M%S") + ".csv")
-    
+
+def generate_client_report():
+    monthly_csv = pd.DataFrame(columns=["Name", "Actual Hours", "Planned Hours", "% Planned Hours"])
+    for e in ini.client_list:
+        if(e.hours > 0 and e.planned_hours > 0):
+            pc_hours = round(float(e.hours) / float(e.planned_hours), 2)
+        monthly_csv.loc[len(monthly_csv.index)] = [e.name, round(e.hours, 2),  round(e.planned_hours, 2),  pc_hours]
+    print("csv generated in monthly_roundups folder")
+    monthly_csv.to_csv("csv/monthly_roundups/client_hours_" + dt.datetime.now().strftime("%d_%m_%y_%H%M%S") + ".csv")
